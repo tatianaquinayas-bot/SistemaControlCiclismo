@@ -1,16 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.sistemacontrolciclismo;
 
-/**
- *
- * @author 57323
- */
+import Controlador.ControladorMundial;
+import Vista.VistaMundial;
+
 public class SistemaControlCiclismo {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        // Crear el controlador
+        ControladorMundial controlador =
+                new ControladorMundial();
+
+        // Crear la vista
+        VistaMundial vista = new VistaMundial();
+
+        // Conectar la vista con el controlador
+        vista.setControlador(controlador);
+
+        // Mostrar la ventana
+        vista.setVisible(true);
     }
 }
