@@ -1,3 +1,4 @@
+
 package Controlador;
 
 import Modelo.Competidor;
@@ -7,11 +8,12 @@ public class ControladorMundial {
 
     private ArrayList<Competidor> competidores;
 
+    // Constructor
     public ControladorMundial() {
         competidores = new ArrayList<>();
     }
 
-    // REGISTRAR COMPETIDOR
+    // Registrar competidor
     public boolean registrarCompetidor(String nombre, int edad,
             String pais, int ranking, double estatura, double peso) {
 
@@ -27,7 +29,7 @@ public class ControladorMundial {
         return true;
     }
 
-    // BUSCAR COMPETIDOR
+    // Buscar competidor por nombre
     public Competidor buscarCompetidor(String nombre) {
 
         for (Competidor c : competidores) {
@@ -40,7 +42,7 @@ public class ControladorMundial {
         return null;
     }
 
-    // MOSTRAR COMPETIDORES
+    // Mostrar competidores
     public String mostrarCompetidores() {
 
         String resultado = "";
@@ -58,7 +60,7 @@ public class ControladorMundial {
         return resultado;
     }
 
-    // ACTUALIZAR RANKING
+    // Actualizar ranking
     public boolean actualizarRanking(String nombre,
             int puntos, boolean ganoMedalla) {
 

@@ -1,3 +1,4 @@
+
 package com.mycompany.sistemacontrolciclismo;
 
 import Controlador.ControladorMundial;
@@ -8,8 +9,7 @@ public class SistemaControlCiclismo {
     public static void main(String[] args) {
 
         // Crear el controlador
-        ControladorMundial controlador =
-                new ControladorMundial();
+        ControladorMundial controlador = new ControladorMundial();
 
         // Crear la vista
         VistaMundial vista = new VistaMundial();
@@ -18,6 +18,8 @@ public class SistemaControlCiclismo {
         vista.setControlador(controlador);
 
         // Mostrar la ventana
+        vista.setLocationRelativeTo(null);
         vista.setVisible(true);
+
     }
 }
