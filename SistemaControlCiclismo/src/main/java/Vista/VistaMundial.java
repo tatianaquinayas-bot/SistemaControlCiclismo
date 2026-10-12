@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+import Controlador.ControladorMundial;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -11,13 +13,20 @@ package Vista;
 public class VistaMundial extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaMundial.class.getName());
+    private ControladorMundial controlador;
 
     /**
      * Creates new form VistaMundial
      */
     public VistaMundial() {
         initComponents();
-    }
+        setTitle("Mundial de Ciclismo de Pista - Cali");
+        setLocationRelativeTo(null);
+        jTextArea1.setEditable(false);
+}
+    public void setControlador(ControladorMundial controlador) {
+    this.controlador = controlador;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,11 +83,13 @@ public class VistaMundial extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         btnActualizarRanking.setText("Actualizar Ranking");
+        btnActualizarRanking.addActionListener(this::btnActualizarRankingActionPerformed);
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(this::btnRegistrarActionPerformed);
 
         btnMostrarCompetidores.setText("Mostrar Competidores");
+        btnMostrarCompetidores.addActionListener(this::btnMostrarCompetidoresActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -195,8 +206,165 @@ public class VistaMundial extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        
+    if (controlador == null) {
+        JOptionPane.showMessageDialog(this,
+                "Ejecuta el programa desde la clase principal.");
+        return;
+    }
+
+    String nombre = txtNombre.getText().trim();
+    String pais = txtPais.getText().trim();
+
+    if (nombre.isEmpty() || pais.isEmpty()
+            || txtEdad.getText().trim().isEmpty()
+            || txtRanking.getText().trim().isEmpty()
+            || txtEstatura.getText().trim().isEmpty()
+            || txtPeso.getText().trim().isEmpty()) {
+
+        JOptionPane.showMessageDialog(this,
+                "Debes completar todos los campos.");
+        return;
+    }
+
+    try {
+
+        int edad = Integer.parseInt(txtEdad.getText().trim());
+        int ranking = Integer.parseInt(txtRanking.getText().trim());
+        double estatura = Double.parseDouble(txtEstatura.getText().trim());
+        double peso = Double.parseDouble(txtPeso.getText().trim());
+
+        if (edad <= 0 || ranking < 1
+                || estatura <= 0 || peso <= 0) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Verifica los valores ingresados.");
+            return;
+        }
+
+        boolean registrado = controlador.registrarCompetidor(
+                nombre, edad, pais, ranking, estatura, peso);
+
+        if (registrado) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Competidor registrado correctamente.");
+
+            jTextArea1.setText(controlador.mostrarCompetidores());
+
+            txtNombre.setText("");
+            txtEdad.setText("");
+            txtPais.setText("");
+            txtRanking.setText("");
+            txtEstatura.setText("");
+            txtPeso.setText("");
+
+        } else {
+
+            JOptionPane.showMessageDialog(this,
+                    "Ya existe un competidor con ese nombre.");
+        }
+
+    } catch (NumberFormatException e) {
+
+        JOptionPane.showMessageDialog(this,
+                "Ingresa números válidos. "
+                + "Para decimales utiliza punto, ejemplo: 1.75");
+    }
+
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnMostrarCompetidoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarCompetidoresActionPerformed
+        if (controlador == null) {
+    JOptionPane.showMessageDialog(this,
+            "Ejecuta el programa desde la clase principal.");
+    return;
+}
+
+jTextArea1.setText(controlador.mostrarCompetidores());
+    }//GEN-LAST:event_btnMostrarCompetidoresActionPerformed
+
+    private void btnActualizarRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarRankingActionPerformed
+        
+if (controlador == null) {
+    JOptionPane.showMessageDialog(this,
+            "Ejecuta el programa desde la clase principal.");
+    return;
+}
+
+// Pedir el nombre
+String nombre = JOptionPane.showInputDialog(
+        this, "Nombre del competidor:");
+
+if (nombre == null) {
+    return;
+}
+
+nombre = nombre.trim();
+
+// Buscar al competidor
+if (controlador.buscarCompetidor(nombre) == null) {
+
+    JOptionPane.showMessageDialog(this,
+            "Competidor no encontrado.");
+    return;
+}
+
+// Pedir los puntos
+String textoPuntos = JOptionPane.showInputDialog(
+        this, "Puntos obtenidos:");
+
+if (textoPuntos == null) {
+    return;
+}
+
+try {
+
+    int puntos = Integer.parseInt(textoPuntos.trim());
+
+    if (puntos < 0) {
+
+        JOptionPane.showMessageDialog(this,
+                "Los puntos no pueden ser negativos.");
+        return;
+    }
+
+    // Preguntar si ganó medalla
+    int respuesta = JOptionPane.showConfirmDialog(
+            this,
+            "¿El competidor ganó medalla?",
+            "Actualizar Ranking",
+            JOptionPane.YES_NO_CANCEL_OPTION
+    );
+
+    if (respuesta == JOptionPane.CANCEL_OPTION
+            || respuesta == JOptionPane.CLOSED_OPTION) {
+        return;
+    }
+
+    boolean ganoMedalla =
+            respuesta == JOptionPane.YES_OPTION;
+
+    // Actualizar mediante el controlador
+    boolean actualizado = controlador.actualizarRanking(
+            nombre, puntos, ganoMedalla);
+
+    if (actualizado) {
+
+        JOptionPane.showMessageDialog(this,
+                "Ranking actualizado correctamente.");
+
+        jTextArea1.setText(
+                controlador.mostrarCompetidores());
+    }
+
+} catch (NumberFormatException e) {
+
+    JOptionPane.showMessageDialog(this,
+            "Debes ingresar un número válido de puntos.");
+}
+
+    }//GEN-LAST:event_btnActualizarRankingActionPerformed
 
     /**
      * @param args the command line arguments

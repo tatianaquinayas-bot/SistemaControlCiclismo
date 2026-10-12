@@ -223,6 +223,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Actualizar Ranking"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarRankingActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnRegistrar">
           <Properties>
@@ -236,6 +239,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Mostrar Competidores"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarCompetidoresActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
