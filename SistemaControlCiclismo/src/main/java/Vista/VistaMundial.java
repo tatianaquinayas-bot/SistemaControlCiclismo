@@ -6,6 +6,8 @@ package Vista;
 import Controlador.ControladorMundial;
 import javax.swing.JOptionPane;
 
+import Controlador.ControladorMundial;
+
 /**
  *
  * @author 57323
@@ -411,4 +413,8 @@ try {
     private javax.swing.JTextField txtPeso;
     private javax.swing.JTextField txtRanking;
     // End of variables declaration//GEN-END:variables
+
+    public void setControlador(ControladorMundial controlador) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
