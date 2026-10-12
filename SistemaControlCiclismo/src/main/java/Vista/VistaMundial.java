@@ -6,6 +6,7 @@ package Vista;
 import Controlador.ControladorMundial;
 import javax.swing.JOptionPane;
 
+
 /**
  *
  * @author 57323
@@ -411,4 +412,5 @@ try {
     private javax.swing.JTextField txtPeso;
     private javax.swing.JTextField txtRanking;
     // End of variables declaration//GEN-END:variables
+
 }
